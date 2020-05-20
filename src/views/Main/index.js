@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { 
+import {
     Text,
     View,
     Image,
     TouchableOpacity,
     Modal,
-    SafeAreaView
+    SafeAreaView,
+    StatusBar,
+    BackHandler,
+    Alert,
+    ToastAndroid
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import styles from '../../styles/index';
@@ -15,6 +19,8 @@ import logo from './../../assets/logo.png';
 import background from './../../assets/background.png';
 import Login from '../Login';
 import SignUp from '../SignUp';
+
+let backHandlerClickCount = 0;
 
 export default class Main extends Component {
     constructor(props) {
@@ -34,9 +40,30 @@ export default class Main extends Component {
         });
     }
 
+    backAction = () => {
+        Alert.alert("Sair", "Deseja realmente sair do aplicativo?", [
+          {
+            text: "Cancel",
+            onPress: () => null,
+            style: "cancel"
+          },
+          { text: "Sim", onPress: () => BackHandler.exitApp() }
+        ]);
+        return true;
+    };
+    
+    componentDidMount() {
+        BackHandler.addEventListener("hardwareBackPress", this.backAction);
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener("hardwareBackPress", this.backAction);
+    }
+
     render() { 
         return (
             <View style={MainStyles.containerStart}>
+                <StatusBar barStyle='light-content' backgroundColor='#203f78' />
                 <Image style={MainStyles.background} source={background} />
                 <View>
                     <View>

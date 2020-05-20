@@ -10,13 +10,14 @@ import {
     Input
 } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/core';
-import PPAPI from '../../configs/api/axios_config';
+import UserController from '../../controllers/user/user_controller';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from '../../styles/index';
 import LoginStyles from '../../styles/Login';
 
+const user_controller = new UserController();
 
 export default function Login() {
     const { appWidth, appHeight } = Dimensions.get('window');
@@ -42,12 +43,15 @@ export default function Login() {
             setDisableButton(false);
     }
 
-    function loginUser() {
-        if(email === 'teste@example.com' || !password){
-            console.log('Os campos não podem ficar vazios');
-        } else {
+    async function loginUser() {
+        try{
             const user = { email, password };
-            PPAPI.post('/api/login', user);
+            let data_user = await user_controller.login(user)
+            navigation.navigate('Dashboard', {
+                params: data_user
+            });
+        }catch(error){
+            console.log(error);
         }
     }
 

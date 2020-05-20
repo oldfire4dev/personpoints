@@ -3,7 +3,6 @@ import {
     View,
     Text,
     Dimensions,
-    TouchableOpacity
 } from 'react-native';
 import {
     Button,
@@ -11,14 +10,14 @@ import {
     CheckBox
 } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/core';
-import UserService from '../../services/users/userService';
+import UserController from '../../controllers/user/user_controller';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from '../../styles/index';
 import LoginStyles from '../../styles/Login';
 
-const user_service = new UserService();
+const user_controller = new UserController();
 
 export default function signUp() {
     const { appWidth, appHeight } = Dimensions.get('window');
@@ -27,6 +26,8 @@ export default function signUp() {
     const [email, setEmail] = useState('teste@example.com');
     const [genre, setGenre] = useState(null);
     const [password, setPassword] = useState(null);
+    const [profilePicURL, setProfilePicURL] = useState(null);
+
     const [confirmPassword, setConfirmPassword] = useState(null);
     const [showPass, setShowPass] = useState(false);
     const [checkedMasc, setCheckedMasc] = useState(false);
@@ -48,6 +49,11 @@ export default function signUp() {
         return true;
     }
 
+    function verifyPasswordLength(pass) {
+        if(pass < 6) return false;
+        return true;
+    }
+
     function verifyGenre() {
         if(genre == 'Masculino'){
             setCheckedMasc(true);
@@ -58,22 +64,29 @@ export default function signUp() {
         }
     }
 
-    // function verifyPasswordLength(pass) {
-    //     if(pass.length() <= 6) return false;
-    //     return true;
-    // }
-
-    function signUpUser() {
+    async function signUpUser() {
         if(!disableButton){
-            const user = { email, password };
-            user_service.createUser(user)
-                .then(() => navigation.navigate('VerifyAccount'))
-                .catch((err) => console.log(err))
+            const user = { 
+                name,
+                email,
+                password,
+                genre,
+                profilePicURL
+            };
+            try {
+                let data_user = await user_controller.create(user);
+                navigation.navigate('Dashboard', {
+                    params: data_user
+                });
+            } catch (error) {
+                console.log(error)
+            }
+            
         }
     }
 
     function verifyFormItems() {
-        if( email === 'teste@example.com' || !password  || !name || !formatEmail(email) || !verifyConfirmPassword(confirmPassword) || !genre )
+        if( email === 'teste@example.com' || !password  || !name || !formatEmail(email) || !verifyConfirmPassword(confirmPassword) || !verifyPasswordLength(password.length) || !genre )
             setDisableButton(true);
         else
             setDisableButton(false);
@@ -123,7 +136,7 @@ export default function signUp() {
                         returnKeyType = 'next'
                         keyboardType={!showPass?'default':'visible-password'}
                         secureTextEntry={true}
-                        // errorMessage={verifyPasswordLength(password) ? '' : 'A senha deve conter pelo menos 6 caracteres.'}
+                        errorMessage={verifyPasswordLength(password) ? '' : 'A senha deve conter no mínimo 6 caracteres.'}
                         onChangeText={(password) => { setPassword( password ) }}
                     />
                 </View>
