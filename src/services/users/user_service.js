@@ -1,4 +1,5 @@
 import firebase from '../../configs/firebase';
+import firebaseErrors from '../../configs/firebase/auth_errors.json';
 
 const firestore = firebase.firestore();
 
@@ -20,8 +21,24 @@ export default class UserService {
         return firebase.auth().currentUser ? true : false
     }
 
+    sendEmailVerification = async () => {
+        return await firebase.auth().currentUser.sendEmailVerification();
+    }
+
+    isVerifiedEmail = () => {
+        return firebase.auth().currentUser.emailVerified
+    }
+
     logoutUser = () => {
         return firebase.auth().signOut()
+    }
+
+    errorsTranslate = (error) => {
+        var ptError
+        firebaseErrors.translate.forEach(errorList => {
+            if(error.code == "auth/"+errorList.code) ptError = errorList.portuguese;
+        });
+        return ptError;
     }
 
     timestamp = () => {

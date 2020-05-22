@@ -18,7 +18,7 @@ export default class UserController {
                 return auth_user;
             }    
         } catch (error) {
-            return Promise.reject(error);
+            return Promise.reject(user_service.errorsTranslate(error));
         }
         
     }
@@ -29,7 +29,7 @@ export default class UserController {
             let auth_user = await firebase.auth().signInWithEmailAndPassword(user.email, user.password);
             return auth_user
         } catch (error) {
-            return Promise.reject(error);
+            return Promise.reject(user_service.errorsTranslate(error));
         }       
     }
 
@@ -37,9 +37,9 @@ export default class UserController {
         let user = await firebase.auth().currentUser
         let userOnDB;
         if(user)
-            userOnDB = await firestore.collection('users').where('id', '==', user.id);
+            userOnDB = await firestore.collection('users').doc(user.uid).get();
             return {
-                user, userOnDB
+                user, userOnDB: userOnDB.data()
             }
     }
 

@@ -11,6 +11,7 @@ import {
 } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/core';
 import UserController from '../../controllers/user/user_controller';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -19,7 +20,7 @@ import LoginStyles from '../../styles/Login';
 
 const user_controller = new UserController();
 
-export default function signUp() {
+export default function signUp({ closeModalWhenSubmit }) {
     const { appWidth, appHeight } = Dimensions.get('window');
     const navigation = useNavigation();
     const [name, setName] = useState(null);
@@ -32,6 +33,9 @@ export default function signUp() {
     const [showPass, setShowPass] = useState(false);
     const [checkedMasc, setCheckedMasc] = useState(false);
     const [checkedFem, setCheckedFem] = useState(false);
+
+    const [errorAlert, setErrorAlert] = useState(false);
+    const [errorMsg, setErrorMsg] = useState(null);
 
     const [disableButton, setDisableButton] = useState(true);
     useEffect(() => {
@@ -64,7 +68,11 @@ export default function signUp() {
         }
     }
 
-    async function signUpUser() {
+    function confirmedError() {
+        setErrorAlert(false);
+    }
+
+    function signUpUser() {
         if(!disableButton){
             const user = { 
                 name,
@@ -73,15 +81,15 @@ export default function signUp() {
                 genre,
                 profilePicURL
             };
-            try {
-                let data_user = await user_controller.create(user);
-                navigation.navigate('Dashboard', {
-                    params: data_user
-                });
-            } catch (error) {
-                console.log(error)
-            }
-            
+            user_controller.create(user)
+                .then(() => {
+                    navigation.navigate('UserVerified');
+                    closeModalWhenSubmit();                    
+                })
+                .catch(error => {
+                    setErrorAlert(true);
+                    setErrorMsg(error);
+                })
         }
     }
 
@@ -137,6 +145,7 @@ export default function signUp() {
                         keyboardType={!showPass?'default':'visible-password'}
                         secureTextEntry={true}
                         errorMessage={verifyPasswordLength(password) ? '' : 'A senha deve conter no mínimo 6 caracteres.'}
+                        errorStyle={{ color: '#203f78' }}
                         onChangeText={(password) => { setPassword( password ) }}
                     />
                 </View>
@@ -205,6 +214,22 @@ export default function signUp() {
                 <View>
                     <Button buttonStyle={LoginStyles.loginBtn} disabled={disableButton} title="Cadastrar" onPress={() => signUpUser()} />
                 </View>
+                <AwesomeAlert
+                    show={errorAlert}
+                    showProgress={false}
+                    title="Erro!"
+                    message={errorMsg}
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
+                    showConfirmButton={true}
+                    confirmText="Obrigado"
+                    confirmButtonColor="#203f78"
+                    onConfirmPressed={() => {
+                        confirmedError()
+                    }}
+                    overlayStyle={LoginStyles.alertErrorArea}
+                    alertContainerStyle={LoginStyles.teste}
+                />
                 {/* <View style={LoginStyles.closeBtnArea}>
                     <TouchableOpacity style={LoginStyles.closeBtn} onPress={() => navigation.navigate('Main')}>
                         <Icon name="times" size={28} style={LoginStyles.closeIcon} />

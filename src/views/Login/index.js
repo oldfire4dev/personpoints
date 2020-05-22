@@ -11,6 +11,7 @@ import {
 } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/core';
 import UserController from '../../controllers/user/user_controller';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -19,12 +20,15 @@ import LoginStyles from '../../styles/Login';
 
 const user_controller = new UserController();
 
-export default function Login() {
+export default function Login({ closeModalWhenSubmit }) {
     const { appWidth, appHeight } = Dimensions.get('window');
     const navigation = useNavigation();
     const [email, setEmail] = useState('teste@example.com');
     const [password, setPassword] = useState(null);
     const [showPass, setShowPass] = useState(false);
+
+    const [errorAlert, setErrorAlert] = useState(false);
+    const [errorMsg, setErrorMsg] = useState(null);
 
     const [disableButton, setDisableButton] = useState(true);
     useEffect(() => {
@@ -43,16 +47,21 @@ export default function Login() {
             setDisableButton(false);
     }
 
-    async function loginUser() {
-        try{
-            const user = { email, password };
-            let data_user = await user_controller.login(user)
-            navigation.navigate('Dashboard', {
-                params: data_user
-            });
-        }catch(error){
-            console.log(error);
-        }
+    function confirmedError() {
+        setErrorAlert(false);
+    }
+
+    function loginUser() {
+        const user = { email, password };
+        user_controller.login(user)
+            .then(() => {
+                navigation.navigate('UserVerified');
+                closeModalWhenSubmit();
+            })
+            .catch((error) => {
+                setErrorAlert(true);
+                setErrorMsg(error);
+            })
     }
 
     function forgetPassword() {
@@ -115,12 +124,33 @@ export default function Login() {
                         <Text style={LoginStyles.forgotPassText}>Esqueci minha senha</Text>
                     </TouchableOpacity>
                 </View>
+                <AwesomeAlert
+                    show={errorAlert}
+                    showProgress={false}
+                    title="Erro!"
+                    message={errorMsg}
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={false}
+                    showConfirmButton={true}
+                    confirmText="Obrigado"
+                    confirmButtonColor="#203f78"
+                    onConfirmPressed={() => {
+                        confirmedError()
+                    }}
+                    overlayStyle={LoginStyles.alertErrorArea}
+                    alertContainerStyle={LoginStyles.teste}
+                />
                 {/* <View style={LoginStyles.closeBtnArea}>
                     <TouchableOpacity style={LoginStyles.closeBtn} onPress={() => navigation.navigate('Main')}>
                         <Icon name="times" size={28} style={LoginStyles.closeIcon} />
                     </TouchableOpacity>
                 </View> */}
             </View>
+
+            <View style={LoginStyles.alertErrorArea}>
+                
+            </View>
+
         </View>
     );
 }

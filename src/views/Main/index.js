@@ -32,11 +32,15 @@ export default class Main extends Component {
         }
     }
 
+    closeModalWhenSubmit = () => {
+        this.setState({ showFormModal: false });
+    }
+
     showFormModal = (show, button) => {
         this.setState({
             showFormModal: show,
             button,
-            formComponent: button==1 ? <Login /> : <SignUp />
+            formComponent: button==1 ? <Login closeModalWhenSubmit={this.closeModalWhenSubmit} /> : <SignUp closeModalWhenSubmit={this.closeModalWhenSubmit} />
         });
     }
 

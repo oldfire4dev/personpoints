@@ -3,9 +3,16 @@ import {
     View,
     Text,
     Alert,
-    BackHandler
+    BackHandler,
+     TouchableOpacity
 } from 'react-native';
 
+import DashboardStyles from './../../styles/Dashboard';
+
+import Loading from '../../components/Loading';
+import UserService from '../../services/users/user_service';
+
+const user_service = new UserService();
 export default class Dashboard extends Component {
     constructor(props) {
         super(props);
@@ -26,6 +33,11 @@ export default class Dashboard extends Component {
         return true;
     };
     
+    logoutUser = () => {
+        user_service.logoutUser()
+        this.props.navigation.navigate('Main');
+    }
+
     componentDidMount() {
         BackHandler.addEventListener("hardwareBackPress", this.backAction);
     }
@@ -36,8 +48,13 @@ export default class Dashboard extends Component {
 
     render() {
         return (
-            <View>
-                <Text>Dashboard</Text>
+            <View style={DashboardStyles.app}>
+                <View style={DashboardStyles.teste}>
+                    <Text>Dashboard</Text>
+                </View>
+                <TouchableOpacity onPress={() => this.logoutUser()}>
+                    <Text>Sair</Text>
+                </TouchableOpacity>
             </View>
         );
     }

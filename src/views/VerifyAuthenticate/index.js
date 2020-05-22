@@ -4,6 +4,7 @@ import styles from '../../styles';
 
 // ----- SERVICES
 import UserService from '../../services/users/user_service';
+import Loading from '../../components/Loading';
 
 const user_service = new UserService();
 
@@ -25,12 +26,12 @@ export default function VerifyAuthenticate({ navigation }) {
     }
 
     function redirectUser(auth) {
-        navigation.navigate( auth ? 'Dashboard' : 'Main' );
+        navigation.navigate( auth ? 'UserVerified' : 'Main' );
     }
 
     return (
         <View style={styles.container}>
-            <ActivityIndicator />
+            <Loading color="#203f78" />
         </View>
     );
 }

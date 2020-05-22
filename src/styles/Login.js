@@ -58,6 +58,16 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
 
+    alertErrorArea: {
+        backgroundColor: 'transparent',
+    },
+
+    teste: {
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        marginLeft: 10,
+    },
+
 });
 
 export default styles;

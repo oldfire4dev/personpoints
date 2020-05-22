@@ -4,6 +4,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Main from '../views/Main';
 import Dashboard from '../views/Dashboard';
 import VerifyAuthenticate from '../views/VerifyAuthenticate';
+import VerifyAccount from '../views/VerifyAccount';
+
+import userVerified from '../views/VerifyAccount/userVerified';
 
 import { decode, encode } from 'base-64';
 import ignoreWarnings from 'react-native-ignore-warnings';
@@ -17,13 +20,14 @@ if (!global.atob) { global.atob = decode; }
 
 export default function StackNav() {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="VerifyAuthenticate" >
             <Stack.Screen 
                 name="VerifyAuthenticate"
                 component={VerifyAuthenticate}
                 options={{
                     headerTransparent: true,
                     headerTitle: false,
+                    headerShown: false
                 }}
             />
             <Stack.Screen 
@@ -36,11 +40,30 @@ export default function StackNav() {
                 }}
             />
             <Stack.Screen 
-                name="Dashboard"
-                component={Dashboard}
+                name="UserVerified"
+                component={userVerified}
+                options={{
+                    headerTransparent: false,
+                    headerTitle: false,
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen 
+                name="VerifyAccount"
+                component={VerifyAccount}
                 options={{
                     headerTransparent: true,
                     headerTitle: false,
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen 
+                name="Dashboard"
+                component={Dashboard}
+                options={{
+                    headerTransparent: false,
+                    headerTitle: false,
+                    headerShown: false
                 }}
             />
         </Stack.Navigator>

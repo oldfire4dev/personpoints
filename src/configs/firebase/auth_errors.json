@@ -1,0 +1,205 @@
+{
+    "translate":[
+		{
+		"code": "app-not-authorized",
+		"portuguese": "Este aplicativo, identificado pelo domínio em que está hospedado, não está autorizado a usar a Autenticação do Firebase com a chave de API fornecida. Revise sua configuração de chave no console da API do Google."
+		},
+		{
+		"code": "app-not-installed",
+		"portuguese": "O aplicativo móvel solicitado correspondente ao identificador (nome do pacote Android ou ID do pacote iOS) fornecido não está instalado neste dispositivo."
+		},
+		{
+		"code": "cordova-not-ready",
+		"portuguese": "O quadro Cordova não está pronto."
+		},
+		{
+		"code": "cors-unsupported",
+		"portuguese": "Este navegador não é suportado."
+		},
+		{
+		"code": "credential-already-in-use",
+		"portuguese": "Essa credencial já está associada a uma conta de usuário diferente."
+		},
+		{
+		"code": "custom-token-mismatch",
+		"portuguese": "O token personalizado corresponde a um público diferente."
+		},
+		{
+		"code": "requires-recent-login",
+		"portuguese": "Esta operação é sensível e requer autenticação recente. Efetue login novamente antes de tentar novamente esta solicitação."
+		},
+		{
+		"code": "dynamic-link-not-activated",
+		"portuguese": "Ative os Links Dinâmicos no Firebase Console e aceite os termos e condições."
+		},
+		{
+		"code": "email-already-in-use",
+		"portuguese": "O endereço de email já está sendo usado por outra conta."
+		},
+		{
+		"code": "expired-action-code",
+		"portuguese": "O código de ação expirou."
+		},
+		{
+		"code": "cancelled-popup-request",
+		"portuguese": "Esta operação foi cancelada devido à abertura de outro pop-up conflitante."
+		},
+		{
+		"code": "internal-error",
+		"portuguese": "Ocorreu um erro interno."
+		},
+		{
+		"code": "argument-error",
+		"portuguese": "Campo vazio"
+		},
+		{
+		"code": "invalid-app-id",
+		"portuguese": "O identificador de aplicativo móvel não está registrado no projeto atual."
+		},
+		{
+		"code": "invalid-user-token",
+		"portuguese": "A credencial do usuário não é mais válida. O usuário deve entrar novamente."
+		},
+		{
+		"code": "invalid-auth-event",
+		"portuguese": "Ocorreu um erro interno."
+		},
+		{
+		"code": "invalid-cordova-configuration",
+		"portuguese": "Os seguintes plug-ins do Cordova devem ser instalados para ativar a entrada do OAuth: cordova-plugin-buildinfo, cordova-universal-links-plugin, cordova-plugin-browsertab, cordova-plugin-inappbrowser e cordova-plugin-customurlscheme."
+		},
+		{
+		"code": "invalid-custom-token",
+		"portuguese": "O formato do token personalizado está incorreto. Por favor, verifique a documentação."
+		},
+		{
+		"code": "invalid-email",
+		"portuguese": "O endereço de email está mal formatado."
+		},
+		{
+		"code": "invalid-api-key",
+		"portuguese": "Sua chave de API é inválida. Verifique se você a copiou corretamente."
+		},
+		{
+		"code": "invalid-credential",
+		"portuguese": "A credencial de autenticação fornecida está incorreta ou expirou."
+		},
+		{
+		"code": "invalid-message-payload",
+		"portuguese": "O modelo de email correspondente a esta ação contém caracteres inválidos em sua mensagem. Para corrigir, acesse a seção Modelos de email de autenticação no Firebase Console."
+		},
+		{
+		"code": "invalid-oauth-provider",
+		"portuguese": "EmailAuthProvider não é suportado para esta operação. Esta operação suporta apenas provedores OAuth."
+		},
+		{
+		"code": "unauthorized-domain",
+		"portuguese": "Este domínio não está autorizado para operações OAuth para o seu projeto Firebase. Edite a lista de domínios autorizados no console do Firebase."
+		},
+		{
+		"code": "invalid-action-code",
+		"portuguese": "O código de ação é inválido. Isso pode acontecer se o código estiver malformado, expirado ou já tiver sido usado."
+		},
+		{
+		"code": "wrong-password",
+		"portuguese": "A senha é inválida ou o usuário não possui uma senha."
+		},
+		{
+		"code": "invalid-recipient-email",
+		"portuguese": "Falha ao enviar o email correspondente a esta ação, pois o endereço de email do destinatário fornecido é inválido."
+		},
+		{
+		"code": "invalid-sender",
+		"portuguese": "O modelo de email correspondente a esta ação contém um nome ou email de remetente inválido. Para corrigir, acesse a seção Modelos de email de autenticação no Firebase Console."
+		},
+		{
+		"code": "missing-iframe-start",
+		"portuguese": "Ocorreu um erro interno."
+		},
+		{
+		"code": "auth-domain-config-required",
+		"portuguese": "Certifique-se de incluir authDomain ao chamar firebase.initializeApp (), seguindo as instruções no console do Firebase."
+		},
+		{
+		"code": "app-deleted",
+		"portuguese": "Esta instância do FirebaseApp foi excluída."
+		},
+		{
+		"code": "account-exists-with-different-credential",
+		"portuguese": "Já existe uma conta com o mesmo endereço de email, mas com credenciais de login diferentes. Faça login usando um provedor associado a este endereço de email."
+		},
+		{
+		"code": "network-request-failed",
+		"portuguese": "Ocorreu um erro de rede (como tempo limite, conexão interrompida ou host inacessível)."
+		},
+		{
+		"code": "no-auth-event",
+		"portuguese": "Ocorreu um erro interno."
+		},
+		{
+		"code": "no-such-provider",
+		"portuguese": "O usuário não estava vinculado a uma conta com o provedor fornecido."
+		},
+		{
+		"code": "operation-not-allowed",
+		"portuguese": "O provedor de entrada fornecido está desabilitado para este projeto Firebase. Habilite-o no console do Firebase, na guia Método de login da seção Auth."
+		},
+		{
+		"code": "operation-not-supported-in-this-environment",
+		"portuguese": "Esta operação não é suportada no ambiente em que o aplicativo está sendo executado. 'location.protocol' deve ser http, https ou extensão chrome e o armazenamento na web deve estar ativado."
+		},
+		{
+		"code": "popup-blocked",
+		"portuguese": "Não foi possível estabelecer uma conexão com o pop-up. Pode ter sido bloqueado pelo navegador."
+		},
+		{
+		"code": "popup-closed-by-user",
+		"portuguese": "O pop-up foi fechado pelo usuário antes de finalizar a operação."
+		},
+		{
+		"code": "provider-already-linked",
+		"portuguese": "O usuário pode ser vinculado apenas a uma identidade para o provedor especificado."
+		},
+		{
+		"code": "redirect-cancelled-by-user",
+		"portuguese": "A operação de redirecionamento foi cancelada pelo usuário antes da finalização."
+		},
+		{
+		"code": "redirect-operation-pending",
+		"portuguese": "Uma operação de entrada de redirecionamento já está pendente."
+		},
+		{
+		"code": "user-token-expired",
+		"portuguese": "A credencial do usuário não é mais válida. O usuário deve entrar novamente."
+		},
+		{
+		"code": "too-many-requests",
+		"portuguese": "Bloqueamos todos os pedidos deste dispositivo devido a atividades incomuns. Tente mais tarde."
+		},
+		{
+		"code": "user-cancelled",
+		"portuguese": "O usuário não concedeu ao seu aplicativo as permissões solicitadas."
+		},
+		{
+		"code": "user-not-found",
+		"portuguese": "Não há registro de usuário correspondente a esse identificador. O usuário pode ter sido excluído."
+		},
+		{
+		"code": "user-disabled",
+		"portuguese": "A conta do usuário foi desativada por um administrador."
+		},
+		{
+		"code": "user-mismatch",
+		"portuguese": "As credenciais fornecidas não correspondem ao usuário conectado anteriormente."
+		},
+		{
+		"code": "weak-password",
+		"portuguese": "A senha deve ter 6 caracteres ou mais."
+		},
+		{
+		"code": "web-storage-unsupported",
+		"portuguese": "Este navegador não é suportado ou cookies e dados de terceiros podem estar desativados."
+		}
+	]
+
+}
