@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Main from '../views/Main';
-import Dashboard from '../views/Dashboard';
+import DrawerNav from '../routes/drawerNav';
 import VerifyAuthenticate from '../views/VerifyAuthenticate';
 import VerifyAccount from '../views/VerifyAccount';
 
@@ -58,8 +58,8 @@ export default function StackNav() {
                 }}
             />
             <Stack.Screen 
-                name="Dashboard"
-                component={Dashboard}
+                name="DrawerNav"
+                component={DrawerNav}
                 options={{
                     headerTransparent: false,
                     headerTitle: false,

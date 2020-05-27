@@ -52,7 +52,7 @@ export default class userVerified extends Component {
                         isVerified: data.user.emailVerified
                     }
                 })
-                if(this.state.user.isVerified) this.props.navigation.navigate('Dashboard', this.state.user);
+                if(this.state.user.isVerified) this.props.navigation.navigate('DrawerNav', { screen: 'Dashboard', params: {user: this.state.user} });
                 else this.props.navigation.navigate('VerifyAccount', this.state.user);
             })
             .catch(error => {
