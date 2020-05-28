@@ -20,6 +20,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
 
+    removePersonButton: {
+        position: 'absolute',
+        right: 0,
+    },
+
 })
 
 export default styles;

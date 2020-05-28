@@ -4,13 +4,12 @@ import {
     Text,
     Alert,
     BackHandler,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
     Avatar,
-    Menu,
-    Provider,
 } from 'react-native-paper';
 import { Overlay } from 'react-native-elements';
 import CreatePersonModal from '../../components/CreatePersonModal';
@@ -19,6 +18,7 @@ import ChangePerson from '../../components/ChangePerson';
 import styles from '../../components/ChangePerson/styles';
 import DashboardStyles from './../../styles/Dashboard';
 
+import DefaultProfileImg from '../../assets/default-profile-pic.png';
 import Loading from '../../components/Loading';
 import UserService from '../../services/users/user_service';
 import PersonController from '../../controllers/person/person_controller';
@@ -26,6 +26,7 @@ import PersonController from '../../controllers/person/person_controller';
 const user_service = new UserService();
 const person_controller = new PersonController();
 export default class Dashboard extends Component {
+    _isMounted = false;
     constructor(props) {
         super(props);
         this.state = {
@@ -106,14 +107,27 @@ export default class Dashboard extends Component {
         this.props.navigation.openDrawer();
     }
 
+    updatePersonTier = () => {
+        person_controller.updatePersonTier(this.state.selectedPerson.id, 
+        this.state.selectedPerson.points, 1200)
+            .then(() => {
+                console.log('Pessoa Atualizada')
+            })
+            .catch((err) => console.log(err.message) )
+    }
+
     componentDidMount() {
+        this._isMounted = true;
         BackHandler.addEventListener("hardwareBackPress", this.backAction);
-        this.fetchUser();
-        this.fetchPersons();
+        if (this._isMounted) {
+            this.fetchUser();
+            this.fetchPersons();
+        }
     }
 
     componentWillUnmount() {
         BackHandler.removeEventListener("hardwareBackPress", this.backAction);
+        this._isMounted = false;
     }
 
     render() {
@@ -130,9 +144,12 @@ export default class Dashboard extends Component {
                                     <Icon name="user-plus" size={22} color="#e4e4e4" />
                                 </TouchableOpacity>
                             :
+                            <>
+                                {!!this.state.selectedPerson && <Text style={DashboardStyles.personName} >{this.state.selectedPerson.name}</Text> }
                                 <TouchableOpacity onPress={() => this.menuPersonsHandle(true)}>
-                                    <Avatar.Image size={32} source={{ uri: this.state.selectedPerson ? this.state.selectedPerson.profilePic : 'https://cdn5.vectorstock.com/i/1000x1000/79/39/young-guy-cartoon-icon-vector-13327939.jpg' }} />
+                                    <Avatar.Image size={32} source={ this.state.selectedPerson ? { uri:  this.state.selectedPerson.profilePic } : DefaultProfileImg } />
                                 </TouchableOpacity>
+                            </>
                                 
                         }
                         <Overlay
@@ -154,7 +171,19 @@ export default class Dashboard extends Component {
                             </>
                             :
                             <>
-                                {!!this.state.selectedPerson && <Text style={DashboardStyles.personName} >{this.state.selectedPerson.name}</Text>}
+                                {!!this.state.selectedPerson &&
+                                    <>
+                                        <View style={DashboardStyles.personTierImageArea}>
+                                            <Image style={DashboardStyles.personTierImage} source={{ uri: this.state.selectedPerson.tierURL }} /> 
+                                        </View>
+                                        <View style={DashboardStyles.personTierNameArea}>
+                                            <Text style={DashboardStyles.personTierName} >{this.state.selectedPerson.tierName} {this.state.selectedPerson.tierNumber ? this.state.selectedPerson.tierNumber : null}</Text>
+                                        </View>
+                                        <View style={DashboardStyles.personPointsArea}>
+                                            <Text style={DashboardStyles.personPoints} >{this.state.selectedPerson.points}{this.state.selectedPerson.nextTierPoints ? '/'+this.state.selectedPerson.nextTierPoints : null }</Text>
+                                        </View>
+                                    </>
+                                }
                             </>
                         }
                     </View>
@@ -179,7 +208,6 @@ export default class Dashboard extends Component {
                             </View>
                         :
                             <View style={DashboardStyles.tasksTextArea}>
-                                <Text style={DashboardStyles.tasksText}>Tarefas</Text>
                                 <Overlay
                                     isVisible={this.state.showCreatePersonModal}
                                     onBackdropPress={() => this.toggleCreatePersonModal(false)}
@@ -189,6 +217,10 @@ export default class Dashboard extends Component {
                                 >
                                     <CreatePersonModal toggleCreatePersonModal={this.toggleCreatePersonModal} uid={this.state.user.id} />
                                 </Overlay>
+                                <Text style={DashboardStyles.tasksText}>Tarefas</Text>
+                                <TouchableOpacity onPress={() => this.updatePersonTier()}>
+                                    <Text>Teste</Text>
+                                </TouchableOpacity>
                             </View>
                     }
                 </View>

@@ -77,7 +77,7 @@ const DashboardStyles = StyleSheet.create({
     },
 
     modalChangePersonStyle: {
-        width: width * 2/3,
+        width: width * 3/4,
         padding: 20,
     },
 
@@ -86,8 +86,26 @@ const DashboardStyles = StyleSheet.create({
     personName: {
         color: '#FFF',
         fontWeight: 'bold',
-        fontSize: 27,
+        fontSize: 21,
 
+    },
+    personTierImageArea: {
+        marginTop: 10,
+    },
+    personTierImage: {
+        width: 116,
+        height: 116,
+    },
+    personTierName: {
+        color: '#e3e3e3',
+        fontFamily: 'sans-serif',
+        fontSize: 14,
+    },
+    personPoints: {
+        color: '#e3e3e3',
+        fontFamily: 'sans-serif',
+        fontSize: 18,
+        fontWeight: 'bold',
     },
 });
 

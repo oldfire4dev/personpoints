@@ -15,6 +15,22 @@ export default class PersonController {
         }
     }
 
+    delete = async (pid) => {
+        try {
+            firestore.collection('persons').doc(pid).delete();
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    updatePersonTier = async (pid, currentPoints, addedPoints) => {
+        try {
+            person_service.updatePersonTier(pid, currentPoints, addedPoints);
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
     fetchAllPersons = async (uid) => {
         try {
             return firestore.collection('persons').where('userId', '==', uid)
