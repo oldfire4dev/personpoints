@@ -11,7 +11,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {
     Avatar,
 } from 'react-native-paper';
-import { Overlay } from 'react-native-elements';
+import {
+    Overlay,
+    Button
+} from 'react-native-elements';
 import CreatePersonModal from '../../components/CreatePersonModal';
 import ChangePerson from '../../components/ChangePerson';
 
@@ -22,6 +25,11 @@ import DefaultProfileImg from '../../assets/default-profile-pic.png';
 import Loading from '../../components/Loading';
 import UserService from '../../services/users/user_service';
 import PersonController from '../../controllers/person/person_controller';
+import TaskService from '../../services/task/task_service';
+import TaskController from '../../controllers/task/task_controller';
+
+const task_service = new TaskService();
+const task_controller = new TaskController();
 
 const user_service = new UserService();
 const person_controller = new PersonController();
@@ -32,7 +40,10 @@ export default class Dashboard extends Component {
         this.state = {
             user: {},
             persons: {
-                isEmpty: true
+                isEmpty: true,
+            },
+            tasks: {
+                isEmpty: true,
             },
             showCreatePersonModal: false,
             showMenuPerson: false,
@@ -103,6 +114,30 @@ export default class Dashboard extends Component {
             .catch(err => console.log(err))
     }
 
+    fetchTasks = () => {
+        if(this.state.selectedPerson){
+            task_controller.fetchAllTasks(this.state.selectedPerson.id)
+                .then(data => {
+                    data.onSnapshot(snapshot => {
+                        let data = [];
+                        if(snapshot.empty) this.setState({ tasks: {isEmpty: true} })
+                        else {
+                            snapshot.forEach(res => {
+                                data.push(res.data());
+                            })
+                            this.setState({
+                                tasks: {
+                                    data,
+                                    isEmpty: false
+                                }
+                            })
+                        }
+                    })
+                })
+                .catch(err => console.log(err))
+        }
+    }
+
     openDrawerMenu = () => {
         this.props.navigation.openDrawer();
     }
@@ -122,6 +157,7 @@ export default class Dashboard extends Component {
         if (this._isMounted) {
             this.fetchUser();
             this.fetchPersons();
+            this.fetchTasks();
         }
     }
 
@@ -218,9 +254,22 @@ export default class Dashboard extends Component {
                                     <CreatePersonModal toggleCreatePersonModal={this.toggleCreatePersonModal} uid={this.state.user.id} />
                                 </Overlay>
                                 <Text style={DashboardStyles.tasksText}>Tarefas</Text>
-                                <TouchableOpacity onPress={() => this.updatePersonTier()}>
-                                    <Text>Teste</Text>
-                                </TouchableOpacity>
+                                {
+                                    this.state.tasks.isEmpty ?
+                                    <View style={DashboardStyles.noTasksFoundArea}>
+                                        <Icon name="calendar-times-o" size={116} />
+                                        <Text style={{ fontSize:18, marginTop: 30, fontFamily: 'sans-serif', fontStyle: 'italic', }} >Nenhuma tarefa foi encontrada</Text>
+                                        <Button buttonStyle={LoginStyles.loginBtn} disabled={disableButton} title={
+                                            <Icon name="plus" size={19} />
+                                        } />
+                                    </View>
+                                    :
+                                    <View>
+                                        <TouchableOpacity onPress={() => this.updatePersonTier()}>
+                                            <Text>Teste</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                }
                             </View>
                     }
                 </View>

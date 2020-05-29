@@ -3,7 +3,7 @@ import {
     View,
     Text,
     TouchableOpacity,
-    Image
+    ScrollView
 } from 'react-native';
 import {
     Avatar,
@@ -57,34 +57,44 @@ export default function PickCartoonImage({ setProfilePic, cartoons }) {
                 :
                 <>
                     <View style={styles.cartoonPicker}>
-                        {
-                            !!cartoons && cartoons.map((cartoon, index) => {
-                                if(cartoon.genre == 'guy'){
-                                    return(
-                                        <View key={index} >
-                                            <TouchableOpacity style={styles.cartoonImg} onPress={() => chosedImageHandle(cartoon.profilePic)}>
-                                                <Avatar.Image source={{ uri: cartoon.profilePic }} />
-                                            </TouchableOpacity>
-                                        </View>
-                                    );
-                                }
-                            })
-                        }
+                        <ScrollView 
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                        >
+                            {
+                                !!cartoons && cartoons.map((cartoon, index) => {
+                                    if(cartoon.genre == 'guy'){
+                                        return(
+                                            <View key={index} >
+                                                <TouchableOpacity style={styles.cartoonImg} onPress={() => chosedImageHandle(cartoon.profilePic)}>
+                                                    <Avatar.Image source={{ uri: cartoon.profilePic }} />
+                                                </TouchableOpacity>
+                                            </View>
+                                        );
+                                    }
+                                })
+                            }
+                        </ScrollView>
                     </View>
                     <View style={styles.cartoonPicker}>
-                        {
-                            !!cartoons && cartoons.map((cartoon, index) => {
-                                if(cartoon.genre == 'girl'){
-                                    return(
-                                        <View key={index}>
-                                            <TouchableOpacity style={styles.cartoonImg} key={index} onPress={() => chosedImageHandle(cartoon.profilePic)}>
-                                                <Avatar.Image source={{ uri: cartoon.profilePic }} />
-                                            </TouchableOpacity>
-                                        </View>
-                                    );
-                                }
-                            })
-                        }
+                        <ScrollView 
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                        >
+                            {
+                                !!cartoons && cartoons.map((cartoon, index) => {
+                                    if(cartoon.genre == 'girl'){
+                                        return(
+                                            <View key={index}>
+                                                <TouchableOpacity style={styles.cartoonImg} key={index} onPress={() => chosedImageHandle(cartoon.profilePic)}>
+                                                    <Avatar.Image source={{ uri: cartoon.profilePic }} />
+                                                </TouchableOpacity>
+                                            </View>
+                                        );
+                                    }
+                                })
+                            }
+                        </ScrollView>
                     </View>
                 </>
             }

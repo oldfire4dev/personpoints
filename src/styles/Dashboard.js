@@ -81,6 +81,10 @@ const DashboardStyles = StyleSheet.create({
         padding: 20,
     },
 
+    noTasksFoundArea: {
+        alignItems: 'center',
+        marginTop: height - 656,
+    },
 
 
     personName: {

@@ -56,8 +56,6 @@ const styles = StyleSheet.create({
     cartoonPicker: {
         flexDirection: 'row',
         marginTop: 10,
-        flexWrap: 'wrap',
-        
     },
 
     cartoonImg: {
