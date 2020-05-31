@@ -2,6 +2,12 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
+let responsiveHeight;
+
+if(height >= 750) responsiveHeight = height * 0.49;
+else if(height < 750 && height >= 620) responsiveHeight = height * 0.43;
+else if(height < 620 && height >= 495) responsiveHeight = height * 0.33;
+
 const DashboardStyles = StyleSheet.create({
     app: {
         flex: 1,
@@ -62,6 +68,7 @@ const DashboardStyles = StyleSheet.create({
     tasksTextArea: {
         marginTop: 20,
         marginLeft: 30,
+        flexDirection: 'row',
     },
 
     tasksText: {
@@ -79,11 +86,27 @@ const DashboardStyles = StyleSheet.create({
     modalChangePersonStyle: {
         width: width * 3/4,
         padding: 20,
+        borderBottomWidth: 7,
+        borderBottomColor: '#5388d0',
+    },
+
+    modalCreateTaskStyle: {
+        width: width * 4/5,
+        padding: 20,
+        borderBottomWidth: 10,
+        borderBottomColor: '#5388d0',
+    },
+    
+    modalTaskInfoStyle: {
+        width: width * 3/4,
+        padding: 20,
+        borderBottomWidth: 10,
+        borderBottomColor: '#5388d0',
     },
 
     noTasksFoundArea: {
         alignItems: 'center',
-        marginTop: height - 656,
+        marginTop: width / 4,
     },
 
 
@@ -111,6 +134,42 @@ const DashboardStyles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
     },
+
+
+
+    createTaskBtn: {
+        borderRadius: 75,
+        width: 56,
+        height: 56,
+    },
+    createTaskBtnArea: {
+        marginTop: width / 3.75,
+    },
+    listOfTasksArea: {
+        marginTop: 20,
+        backgroundColor: '#e6e6e6',
+        width: '100%',
+        padding: 15,
+        height: responsiveHeight
+    },
+    taskStyle: {
+        backgroundColor: '#fff',
+        padding: 15,
+        marginBottom: 6,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 6,
+    },
+    arrowLeftStyle: {
+        position: 'absolute',
+        right: 12,
+    },
+    taskValuePoints:{
+        position: 'absolute',
+        right: 40,
+        flexDirection: 'column',
+    },
+    
 });
 
 export default DashboardStyles;

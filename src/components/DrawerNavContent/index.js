@@ -71,6 +71,7 @@ export default function DrawerNavContent({props, navigation}) {
                             )}
                             label="Tarefas"
                             labelStyle={DrawerNavContentStyles.itemLabel}
+                            onPress={() => navigation.navigate('Tasks')}
                         />
                         <DrawerItem
                             icon={() => (

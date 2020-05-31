@@ -5,9 +5,11 @@ import {
     Alert,
     BackHandler,
     TouchableOpacity,
-    Image
+    Image,
+    FlatList,
+    ScrollView
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import {
     Avatar,
 } from 'react-native-paper';
@@ -15,8 +17,10 @@ import {
     Overlay,
     Button
 } from 'react-native-elements';
+import CreateTaskModal from '../../components/CreateTaskModal';
 import CreatePersonModal from '../../components/CreatePersonModal';
 import ChangePerson from '../../components/ChangePerson';
+import TaskInfoModal from '../../components/TaskInfoModal';
 
 import styles from '../../components/ChangePerson/styles';
 import DashboardStyles from './../../styles/Dashboard';
@@ -48,6 +52,9 @@ export default class Dashboard extends Component {
             showCreatePersonModal: false,
             showMenuPerson: false,
             selectedPerson: null,
+            selectedTask: null,
+            showCreateTaskModal: false,
+            showTaskInfoModal: false,
         }
     }
 
@@ -76,14 +83,23 @@ export default class Dashboard extends Component {
         this.setState({ showCreatePersonModal: show })
     }
 
+    toggleCreateTaskModal = (show) => {
+        this.setState({ showCreateTaskModal: show })
+    }
+
+    toggleTaskInfoModal = (show, task) => {
+        this.setState({ showTaskInfoModal: show, selectedTask: task })
+    }
+
     selectPerson = (person) => {
-        if(person) this.setState({ selectedPerson: person });
-        else {
-            if(this.state.persons.data){
-                let lastPerson = this.state.persons.data.length - 1;
-                this.setState({ selectedPerson: this.state.persons.data[lastPerson] });
-            }
+        if(person){
+            this.setState({ selectedPerson: person });
         }
+    }
+
+    setActiveUser = () => {
+        let lastPerson = this.state.persons.data.length - 1;
+        this.setState({ selectedPerson: this.state.persons.data[lastPerson] });
     }
 
     fetchUser = () => {
@@ -107,7 +123,8 @@ export default class Dashboard extends Component {
                                 data,
                                 isEmpty: false
                         } })
-                        this.selectPerson();
+                        this.setActiveUser();
+                        if(this.state.persons) this.fetchTasks();
                     }
                 })
             })
@@ -142,22 +159,18 @@ export default class Dashboard extends Component {
         this.props.navigation.openDrawer();
     }
 
-    updatePersonTier = () => {
-        person_controller.updatePersonTier(this.state.selectedPerson.id, 
-        this.state.selectedPerson.points, 1200)
-            .then(() => {
-                console.log('Pessoa Atualizada')
-            })
-            .catch((err) => console.log(err.message) )
-    }
-
     componentDidMount() {
         this._isMounted = true;
         BackHandler.addEventListener("hardwareBackPress", this.backAction);
         if (this._isMounted) {
             this.fetchUser();
             this.fetchPersons();
-            this.fetchTasks();
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevState.selectedPerson&&prevState.selectedPerson.id !== this.state.selectedPerson.id){
+           this.fetchTasks();
         }
     }
 
@@ -202,7 +215,7 @@ export default class Dashboard extends Component {
                         {
                             this.state.persons.isEmpty ?
                             <>
-                                <Icon name="frown-o" size={48} color="#fff"/>
+                                <Icon name="frown-open" size={48} color="#fff"/>
                                 <Text style={DashboardStyles.noPersonText}>Nenhuma pessoa foi encontrada</Text>
                             </>
                             :
@@ -243,7 +256,7 @@ export default class Dashboard extends Component {
                                 </Overlay>
                             </View>
                         :
-                            <View style={DashboardStyles.tasksTextArea}>
+                            <View style={DashboardStyles.tasksArea}>
                                 <Overlay
                                     isVisible={this.state.showCreatePersonModal}
                                     onBackdropPress={() => this.toggleCreatePersonModal(false)}
@@ -253,26 +266,87 @@ export default class Dashboard extends Component {
                                 >
                                     <CreatePersonModal toggleCreatePersonModal={this.toggleCreatePersonModal} uid={this.state.user.id} />
                                 </Overlay>
-                                <Text style={DashboardStyles.tasksText}>Tarefas</Text>
+                                <View style={DashboardStyles.tasksTextArea} >
+                                    <Icon style={{ marginTop: 5, marginRight: 4, }} name="tasks" size={22} color="#595959" />
+                                    <Text style={DashboardStyles.tasksText}>Tarefas</Text>
+                                </View>
                                 {
                                     this.state.tasks.isEmpty ?
                                     <View style={DashboardStyles.noTasksFoundArea}>
-                                        <Icon name="calendar-times-o" size={116} />
+                                        <Icon name="calendar-times" size={116} />
                                         <Text style={{ fontSize:18, marginTop: 30, fontFamily: 'sans-serif', fontStyle: 'italic', }} >Nenhuma tarefa foi encontrada</Text>
-                                        <Button buttonStyle={LoginStyles.loginBtn} disabled={disableButton} title={
-                                            <Icon name="plus" size={19} />
-                                        } />
+                                        <Overlay
+                                            isVisible={this.state.showCreateTaskModal}
+                                            onBackdropPress={() => this.toggleCreateTaskModal(false)}
+                                            animated={true}
+                                            animationType='fade'
+                                            overlayStyle={DashboardStyles.modalCreateTaskStyle}
+                                        >
+                                            <CreateTaskModal toggleCreateTaskModal={this.toggleCreateTaskModal} pid={this.state.selectedPerson && this.state.selectedPerson.id} />
+                                        </Overlay>
                                     </View>
                                     :
-                                    <View>
-                                        <TouchableOpacity onPress={() => this.updatePersonTier()}>
-                                            <Text>Teste</Text>
-                                        </TouchableOpacity>
-                                    </View>
+                                    !!this.state.tasks.data && 
+                                    <>
+                                        <Overlay
+                                            isVisible={this.state.showCreateTaskModal}
+                                            onBackdropPress={() => this.toggleCreateTaskModal(false)}
+                                            animated={true}
+                                            animationType='fade'
+                                            overlayStyle={DashboardStyles.modalCreateTaskStyle}
+                                        >
+                                            <CreateTaskModal toggleCreateTaskModal={this.toggleCreateTaskModal} pid={this.state.selectedPerson && this.state.selectedPerson.id} />
+                                        </Overlay>
+                                        <View style={DashboardStyles.listOfTasksArea}>
+                                            <ScrollView>
+                                            
+                                                {
+                                                    this.state.tasks.data.map((task, index) => (
+                                                        !task.finished &&
+                                                            <TouchableOpacity key={index} style={DashboardStyles.taskStyle} onPress={() => this.toggleTaskInfoModal(true, task)}>
+                                                                <Text>{task.title}</Text>
+                                                                <View style={DashboardStyles.taskValuePoints} >
+                                                                    <Icon name='coins' size={16} color='#191d24' style={{ marginLeft: 5 }} />
+                                                                    <Text style={{ fontSize: 12, }} >+{task.earn}</Text>
+                                                                </View>
+                                                                {!task.simpleTask && <Icon name="sync" size={15} color='#191d24' style={{ position: 'absolute', right: 80, }} />}
+                                                                <Icon name="angle-right" size={24} color='#191d24' style={DashboardStyles.arrowLeftStyle} />
+                                                            </TouchableOpacity>
+                                                    ))
+                                                }
+                                                {
+                                                    !!this.state.selectedTask &&
+                                                    <Overlay
+                                                        isVisible={this.state.showTaskInfoModal}
+                                                        onBackdropPress={() => this.toggleTaskInfoModal(false, null)}
+                                                        animated={true}
+                                                        animationType='fade'
+                                                        overlayStyle={DashboardStyles.modalTaskInfoStyle}
+                                                    >
+                                                        <TaskInfoModal 
+                                                            toggleTaskInfoModal={this.toggleTaskInfoModal}
+                                                            personId={this.state.selectedPerson.id}
+                                                            personPoints={this.state.selectedPerson.points}
+                                                            task={this.state.selectedTask}
+                                                        />
+                                                    </Overlay>
+                                                }
+                                            </ScrollView>
+                                        </View>        
+                                    </>
                                 }
+                                
                             </View>
                     }
                 </View>
+                {
+                    !this.state.persons.isEmpty &&
+                    <View style={{ alignItems: 'center', position: 'absolute', bottom: 14, right: 0, left: 0, }}>
+                        <Button buttonStyle={DashboardStyles.createTaskBtn} onPress={() => this.toggleCreateTaskModal(true)} icon={
+                            <Icon name="plus" size={32} />
+                        } />
+                    </View>
+                }
             </View>
         );
     }

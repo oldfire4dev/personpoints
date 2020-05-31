@@ -23,9 +23,9 @@ export default class PersonController {
         }
     }
 
-    updatePersonTier = async (pid, currentPoints, addedPoints) => {
+    updatePersonPoints = async (pid, currentPoints, addedPoints) => {
         try {
-            person_service.updatePersonTier(pid, currentPoints, addedPoints);
+            person_service.updatePersonPoints(pid, currentPoints, addedPoints);
         } catch (error) {
             return Promise.reject(error);
         }

@@ -9,7 +9,7 @@ const firestore = firebase.firestore();
 export default class TaskController {
     create = async (task, pid) => {
         try {
-            task_service.createTask(task, pid)
+            task_service.createTask(task, pid);
         } catch (error) {
             return Promise.reject(error);
         }
@@ -26,6 +26,14 @@ export default class TaskController {
     fetchAllTasks = async (pid) => {
         try {
             return firestore.collection('tasks').where('personId', '==', pid)
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
+    update = async (tid, task) => {
+        try {
+            return task_service.updateTask(tid, task);
         } catch (error) {
             return Promise.reject(error);
         }

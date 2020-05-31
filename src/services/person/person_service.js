@@ -22,7 +22,7 @@ export default class PersonService {
         })
     }
 
-    updatePersonTier = async (pid, currentPoints, addedPoints) => {
+    updatePersonPoints = async (pid, currentPoints, addedPoints) => {
         let tier_url, tier_name, tier_number, file_name, nextTierPoints, updatedPoints;
         
         if(addedPoints != 0) updatedPoints = (currentPoints + addedPoints);
