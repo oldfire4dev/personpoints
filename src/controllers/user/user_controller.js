@@ -43,4 +43,12 @@ export default class UserController {
             }
     }
 
+    fetchUid = async () => {
+        try {
+            return await firebase.auth().currentUser.uid
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
 }

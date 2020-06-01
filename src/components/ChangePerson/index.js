@@ -19,7 +19,7 @@ import Loading from '../Loading';
 import PersonController from '../../controllers/person/person_controller';
 const person_controller = new PersonController();
 
-export default function ChangePerson({ persons, toggleCreatePersonModal, selectPerson, menuPersonsHandle }) {
+export default function ChangePerson({ persons, toggleCreatePersonModal, selectPerson, menuPersonsHandle, createPersonField }) {
     const [isLoading, setIsLoading] = useState(true);
     const [personId, setPersonId] = useState();
 
@@ -98,7 +98,7 @@ export default function ChangePerson({ persons, toggleCreatePersonModal, selectP
             </View>
             {
                 !!persons && persons.length < 4 ?
-                    <View style={{ alignItems: 'center', marginTop: 30, }} >
+                    <View style={{ alignItems: 'center', marginTop: 30, display: createPersonField ? 'flex' : 'none' }} >
                         <TouchableOpacity style={styles.addPersonButton} onPress={() => toggleCreatePersonModal(true) }>
                             <Icon name="plus" size={21} style={{ marginTop: 1, }} />
                             <Text style={{ fontSize: 17, marginLeft: 5, fontFamily: 'sans-serif', }} >Adicionar pessoa</Text>

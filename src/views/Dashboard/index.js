@@ -208,7 +208,7 @@ export default class Dashboard extends Component {
                             animationType='fade'
                             overlayStyle={DashboardStyles.modalChangePersonStyle}
                         >
-                            <ChangePerson persons={this.state.persons.data} setState={this.setState} toggleCreatePersonModal={this.toggleCreatePersonModal} selectPerson={this.selectPerson} menuPersonsHandle={this.menuPersonsHandle} />
+                            <ChangePerson createPersonField={true} persons={this.state.persons.data} setState={this.setState} toggleCreatePersonModal={this.toggleCreatePersonModal} selectPerson={this.selectPerson} menuPersonsHandle={this.menuPersonsHandle} />
                         </Overlay>
                     </View>
                     <View style={DashboardStyles.personInfoArea}>
@@ -302,7 +302,7 @@ export default class Dashboard extends Component {
                                             
                                                 {
                                                     this.state.tasks.data.map((task, index) => (
-                                                        !task.finished &&
+                                                        (!task.finished && !task.notFulfilled) &&
                                                             <TouchableOpacity key={index} style={DashboardStyles.taskStyle} onPress={() => this.toggleTaskInfoModal(true, task)}>
                                                                 <Text>{task.title}</Text>
                                                                 <View style={DashboardStyles.taskValuePoints} >

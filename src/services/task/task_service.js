@@ -10,6 +10,7 @@ export default class TaskService {
             title: task.title,
             earn: task.earn,
             finished: false,
+            notFulfilled: false,
             taskTimesCount: 0,
             simpleTask: task.simpleTask,
             personId: pid,
@@ -21,7 +22,9 @@ export default class TaskService {
     updateTask = async (tid, task) => {
         let doc = firestore.collection('tasks').doc(tid)
         doc.update({
-            finished: task.finished
+            finished: task.finished,
+            taskTimesCount: task.taskTimesCount,
+            notFulfilled: task.notFulfilled,
         })
     }
 
