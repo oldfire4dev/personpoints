@@ -16,7 +16,7 @@ const TasksStyles = StyleSheet.create({
 
     headerArea: {
         backgroundColor: '#fff',
-        height: 75,
+        height: 60,
         maxHeight: '100%',
         justifyContent: 'center'
     },

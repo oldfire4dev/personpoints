@@ -79,6 +79,7 @@ export default function DrawerNavContent({props, navigation}) {
                             )}
                             label="Objetivos"
                             labelStyle={DrawerNavContentStyles.itemLabel}
+                            onPress={() => navigation.navigate('Objectives')}
                         />
                         <DrawerItem
                             icon={() => (

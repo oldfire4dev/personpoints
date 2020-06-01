@@ -22,7 +22,6 @@ import UserController from '../../controllers/user/user_controller';
 import PersonController from '../../controllers/person/person_controller';
 import TaskService from '../../services/task/task_service';
 import TaskController from '../../controllers/task/task_controller';
-import { render } from 'react-dom';
 
 const task_service = new TaskService();
 const task_controller = new TaskController();

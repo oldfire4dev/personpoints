@@ -4,6 +4,7 @@ import DrawerNavContent from '../components/DrawerNavContent';
 
 import Dashboard from '../views/Dashboard';
 import Tasks from '../views/Tasks';
+import Objectives from '../views/Objectives'
 
 const Drawer = createDrawerNavigator();
 
@@ -28,6 +29,10 @@ export default class DrawerNav extends Component {
                 <Drawer.Screen
                     name="Tasks"
                     component={Tasks}
+                />
+                <Drawer.Screen
+                    name="Objectives"
+                    component={Objectives}
                 />
             </Drawer.Navigator>
         );
