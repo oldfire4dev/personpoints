@@ -25,6 +25,7 @@ export default class TaskService {
             finished: task.finished,
             taskTimesCount: task.taskTimesCount,
             notFulfilled: task.notFulfilled,
+            updatedAt: this.timestamp().getTime(),
         })
     }
 

@@ -21,6 +21,7 @@ export default class ObjectiveService {
         let doc = firestore.collection('objectives').doc(oid)
         doc.update({
             finished: objective.finished,
+            updatedAt: this.timestamp().getTime(),
         })
     }
 

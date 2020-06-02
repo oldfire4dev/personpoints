@@ -43,11 +43,16 @@ export default class ObjectiveController {
         try {
             firestore.collection('objectives').doc(oid)
             .update({
-                cancelled: objective.cancelled
+                cancelled: objective.cancelled,
+                updatedAt: this.timestamp().getTime(),
             })
         } catch (error) {
             return Promise.reject(error);
         }
+    }
+
+    timestamp = () => {
+        return new Date();
     }
 
 }

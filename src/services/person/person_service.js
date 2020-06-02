@@ -112,7 +112,8 @@ export default class PersonService {
             tierNumber: tier_number,
             tierURL: tier_url,
             points: updatedPoints,
-            nextTierPoints
+            nextTierPoints,
+            updatedAt: this.timestamp().getTime(),
         })
     }
 

@@ -18,6 +18,7 @@ import Toast from 'react-native-root-toast';
 
 import ChangePerson from '../../components/ChangePerson';
 import CreateObjectiveModal from '../../components/CreateObjectiveModal';
+import ObjectivesHistoryModal from '../../components/ObjectivesHistoryModal';
 
 import DefaultProfileImg from '../../assets/default-profile-pic.png';
 import UserController from '../../controllers/user/user_controller';
@@ -291,7 +292,7 @@ export default class Objectives extends Component {
                                                 animationType='fade'
                                                 overlayStyle={ObjectivesStyles.modalObjectiveHistoryStyle}
                                             >
-                                                <Text>Histórico</Text>
+                                                <ObjectivesHistoryModal objectives={this.state.objectives} toggleObjectiveHistoryModal={this.toggleObjectiveHistoryModal} />
                                             </Overlay>
                                         </ScrollView>
                                     </View>

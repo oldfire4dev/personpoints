@@ -53,6 +53,7 @@ const ObjectivesStyles = StyleSheet.create({
     modalObjectiveHistoryStyle: {
         width: width * 4/5,
         padding: 20,
+        maxHeight: '60%',
         borderBottomWidth: 10,
         borderBottomColor: '#5388d0',
     },
@@ -97,6 +98,20 @@ const ObjectivesStyles = StyleSheet.create({
         position: 'absolute',
         right: 102,
         flexDirection: 'column',
+    },
+
+
+
+
+    titleArea: {
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+
+    titleText: {
+        fontSize: 22,
+        fontFamily: 'sans-serif',
+        fontWeight: 'bold',
     },
 });
 
