@@ -25,8 +25,13 @@ export default class UserService {
         return await firebase.auth().currentUser.sendEmailVerification();
     }
 
-    isVerifiedEmail = () => {
-        return firebase.auth().currentUser.emailVerified
+    isVerifiedEmail = async () => {
+        try{
+            return await firebase.auth().currentUser.emailVerified
+        }
+        catch(err) {
+            return Promise.reject(err);
+        }
     }
 
     logoutUser = () => {

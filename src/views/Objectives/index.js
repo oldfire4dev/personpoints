@@ -15,6 +15,7 @@ import {
     Overlay,
 } from 'react-native-elements';
 import Toast from 'react-native-root-toast';
+import Loading from '../../components/Loading';
 
 import ChangePerson from '../../components/ChangePerson';
 import CreateObjectiveModal from '../../components/CreateObjectiveModal';
@@ -37,6 +38,7 @@ export default class Objectives extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoading: true,
             persons: { isEmpty: true },
             objectives: { isEmpty: true },
             selectedPerson: null,
@@ -63,7 +65,7 @@ export default class Objectives extends Component {
             .then(data => {
                 data.onSnapshot(snapshot => {
                     let data=[];
-                    if(snapshot.empty) this.setState({ persons: {isEmpty: true} })
+                    if(snapshot.empty) this.setState({ persons: {isEmpty: true}, isLoading: false })
                     else {
                         snapshot.forEach(res => {
                             data.push(res.data());
@@ -96,7 +98,8 @@ export default class Objectives extends Component {
                                 objectives: {
                                     data,
                                     isEmpty: false
-                                }
+                                },
+                                isLoading: false
                             })
                         }
                     })
@@ -212,7 +215,7 @@ export default class Objectives extends Component {
                         </TouchableOpacity>
                         {
                             this.state.persons.isEmpty ?
-                            <Text>Nenhuma pessoa cadastrada</Text>
+                            <Text style={{ fontStyle: 'italic', marginTop: 4, }} >Nenhuma pessoa cadastrada</Text>
                             :
                             <>
                                 {!!this.state.selectedPerson && <Text style={{ color: '#474747', fontSize: 18, fontFamily: 'sans-serif', fontWeight: 'bold', marginTop: 3,}} >{this.state.selectedPerson.name}</Text>}
@@ -234,9 +237,13 @@ export default class Objectives extends Component {
                 </View>
                 <View style={ObjectivesStyles.contentArea}>
                     {
+                        this.state.isLoading ? 
+                            <Loading loadingContentStyle={{ marginTop: 120, }}/>
+                        :
                         this.state.persons.isEmpty ?
                             <View style={ObjectivesStyles.contentPersonsEmpty}>
-                                <Text>Nenhuma pessoa cadastrada</Text>
+                                <Icon name="frown-open" size={72} color="#343434"/>
+                                <Text style={ObjectivesStyles.noPersonText}>Nenhuma pessoa foi encontrada</Text>
                             </View>
                         :
                         this.state.objectives.isEmpty ?

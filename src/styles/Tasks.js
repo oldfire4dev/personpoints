@@ -27,6 +27,18 @@ const TasksStyles = StyleSheet.create({
         marginHorizontal: 20,
     },
 
+    contentPersonsEmpty: {
+        alignItems: 'center',
+        marginTop: 120,
+    },
+
+    noPersonText: {
+        fontSize: 19,
+        fontFamily: 'sans-serif',
+        fontStyle: 'italic',
+        marginTop: 20,
+    },
+
     modalChangePersonStyle: {
         width: width * 3/4,
         padding: 20,

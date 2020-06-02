@@ -9,7 +9,6 @@ import { Button } from 'react-native-elements';
 import Toast from 'react-native-root-toast';
 import AwesomeAlert from 'react-native-awesome-alerts';
 
-import styles from '../../styles/index';
 import VerifyAccountStyles from '../../styles/VerifyAccount';
 import verify_account_img from '../../assets/verify_account.png';
 
@@ -18,6 +17,7 @@ const user_service = new UserService();
 
 
 export default class VerifyAccount extends Component {
+    _isMounted = false;
     constructor(props) {
         super(props);
         this.state = {
@@ -49,18 +49,25 @@ export default class VerifyAccount extends Component {
     }
 
     setNameAndEmail = () => {
-        const {email, name} = this.props.route.params;
+        const {email, name, isVerified} = this.props.route.params;
         let firstName = name.split(' ')[0]
-        this.setState({ name: firstName, email });
+        this.setState({ name: firstName, email, isVerified });
     }
 
     componentDidMount = () => {
-        this.setNameAndEmail();
+        this._isMounted = true
+        if(this._isMounted){
+            this.setNameAndEmail();
+        }
+    }
+
+    componentWillUnmount = () => {
+        this._isMounted = false;
     }
 
     render() {
         return (
-            <View style={styles.container} >
+            <View style={VerifyAccountStyles.app} >
                 <Text style={VerifyAccountStyles.notVerifiedText}>Conta não verificada</Text>
                 <View>
                     <Image style={VerifyAccountStyles.img} source={verify_account_img} />

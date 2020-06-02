@@ -42,6 +42,7 @@ export default class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoading: true,
             user: {},
             persons: {
                 isEmpty: true,
@@ -113,7 +114,7 @@ export default class Dashboard extends Component {
             .then(data => {
                 data.onSnapshot(snapshot => {
                     let data=[];
-                    if(snapshot.empty) this.setState({ persons: {isEmpty: true} })
+                    if(snapshot.empty) this.setState({ persons: {isEmpty: true}, isLoading: false })
                     else {
                         snapshot.forEach(res => {
                             data.push(res.data());
@@ -122,7 +123,8 @@ export default class Dashboard extends Component {
                             persons: {
                                 data,
                                 isEmpty: false
-                        } })
+                            },
+                        })
                         this.setActiveUser();
                         if(this.state.persons) this.fetchTasks();
                     }
@@ -146,7 +148,8 @@ export default class Dashboard extends Component {
                                 tasks: {
                                     data,
                                     isEmpty: false
-                                }
+                                },
+                                isLoading: false
                             })
                         }
                     })
@@ -213,6 +216,9 @@ export default class Dashboard extends Component {
                     </View>
                     <View style={DashboardStyles.personInfoArea}>
                         {
+                            this.state.isLoading ? 
+                                <Loading loadingContentStyle={{ marginTop: 40, }}/>
+                            :
                             this.state.persons.isEmpty ?
                             <>
                                 <Icon name="frown-open" size={48} color="#fff"/>
@@ -239,6 +245,9 @@ export default class Dashboard extends Component {
                 </View>
                 <View style={DashboardStyles.contentArea}>
                     {
+                        this.state.isLoading ? 
+                            <Loading loadingContentStyle={{ marginTop: 120, }}/>
+                        :
                         this.state.persons.isEmpty ?
                             <View style={DashboardStyles.createPersonArea}>
                                 <Text style={DashboardStyles.createPersonText}>Cadastrar Nova Pessoa</Text>

@@ -67,6 +67,18 @@ const ObjectivesStyles = StyleSheet.create({
         height: responsiveHeightInContent,
     },
 
+    contentPersonsEmpty: {
+        alignItems: 'center',
+        marginTop: 120,
+    },
+
+    noPersonText: {
+        fontSize: 19,
+        fontFamily: 'sans-serif',
+        fontStyle: 'italic',
+        marginTop: 20,
+    },
+
     createObjectiveArea: {
         position: 'absolute',
         bottom: 0,

@@ -1,20 +1,25 @@
 import { StyleSheet } from 'react-native';
 
 const VerifyAccountStyles = StyleSheet.create({
+    app: {
+        flex: 1,
+        alignItems: 'center',
+    },
+
     notVerifiedText: {
         fontFamily: 'sans-serif',
         fontSize: 32,
         fontWeight: 'bold',
-        marginBottom: 20,
+        marginVertical: 20,
     },
 
     img: {
-        width: 456,
-        height: 456,
+        width: 256,
+        height: 256,
     },
 
     explainingArea:{
-        marginTop: 10,
+        marginTop: 30,
         padding: 15,
         marginHorizontal: 10,
         backgroundColor: '#ebebeb',

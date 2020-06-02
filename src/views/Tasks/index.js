@@ -12,6 +12,7 @@ import {
 import {
     Overlay,
 } from 'react-native-elements';
+import Loading from '../../components/Loading';
 import ChangePerson from '../../components/ChangePerson';
 import TaskInfoModal from '../../components/TaskInfoModal';
 
@@ -34,6 +35,7 @@ export default class Tasks extends Component{
     constructor(props) {
         super(props);
         this.state = {
+            isLoading: true,
             persons: { isEmpty: true },
             tasks: { isEmpty: true },
             selectedPerson: null,
@@ -73,7 +75,7 @@ export default class Tasks extends Component{
             .then(data => {
                 data.onSnapshot(snapshot => {
                     let data=[];
-                    if(snapshot.empty) this.setState({ persons: {isEmpty: true} })
+                    if(snapshot.empty) this.setState({ persons: {isEmpty: true}, isLoading: false })
                     else {
                         snapshot.forEach(res => {
                             data.push(res.data());
@@ -106,7 +108,8 @@ export default class Tasks extends Component{
                                 tasks: {
                                     data,
                                     isEmpty: false
-                                }
+                                },
+                                isLoading: false
                             })
                         }
                     })
@@ -141,8 +144,11 @@ export default class Tasks extends Component{
                             <Icon name="bars" size={26} color="#474747" />
                         </TouchableOpacity>
                         {
+                            this.state.isLoading ? 
+                                <Loading loadingContentStyle={{ marginTop: 120, }}/>
+                            :
                             this.state.persons.isEmpty ?
-                            <Text>Nenhuma pessoa cadastrada</Text>
+                            <Text style={{ fontStyle: 'italic', marginTop: 4, }} >Nenhuma pessoa cadastrada</Text>
                             :
                             <>
                                 {!!this.state.selectedPerson && <Text style={{ color: '#474747', fontSize: 18, fontFamily: 'sans-serif', fontWeight: 'bold', marginTop: 3,}} >{this.state.selectedPerson.name}</Text>}
@@ -164,10 +170,14 @@ export default class Tasks extends Component{
                 </View>
                 <View style={TasksStyles.contentArea}>
                     {
+                        this.state.isLoading ? 
+                            <Loading loadingContentStyle={{ marginTop: 120, }}/>
+                        :
                         this.state.persons.isEmpty ?
-                            <View style={TasksStyles.contentPersonsEmpty}>
-                                <Text>Nenhuma pessoa cadastrada</Text>
-                            </View>
+                        <View style={TasksStyles.contentPersonsEmpty}>
+                            <Icon name="frown-open" size={72} color="#343434"/>
+                            <Text style={TasksStyles.noPersonText}>Nenhuma pessoa foi encontrada</Text>
+                        </View>
                         :
                         this.state.tasks.isEmpty ?
                             <View style={TasksStyles.noTasksFoundArea}>
