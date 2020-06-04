@@ -51,4 +51,12 @@ export default class UserController {
         }
     }
 
+    sendResetPassword = async (emailReset) => {
+        try {
+            return await firebase.auth().sendPasswordResetEmail(emailReset);
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
 }
