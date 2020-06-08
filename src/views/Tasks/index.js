@@ -145,7 +145,7 @@ export default class Tasks extends Component{
                         </TouchableOpacity>
                         {
                             this.state.isLoading ? 
-                                <Loading loadingContentStyle={{ marginTop: 120, }}/>
+                                <Loading loadingContentStyle={{ marginTop: 5, }}/>
                             :
                             this.state.persons.isEmpty ?
                             <Text style={{ fontStyle: 'italic', marginTop: 4, }} >Nenhuma pessoa cadastrada</Text>

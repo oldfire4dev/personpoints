@@ -59,4 +59,20 @@ export default class UserController {
         }
     }
 
+    updateProfilePicture = async (uid, newProfilePic) => {
+        try {
+            user_service.updateProfilePic(uid, newProfilePic)
+        } catch (error) {
+            return Promise.reject(error.message)
+        }
+    }
+
+    update = async (uid, newValue, type) => {
+        try {
+            return await user_service.updateNewChanges(uid, newValue, type);
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
+
 }

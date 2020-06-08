@@ -87,6 +87,7 @@ export default function DrawerNavContent({props, navigation}) {
                             )}
                             label="Configurações"
                             labelStyle={DrawerNavContentStyles.itemLabel}
+                            onPress={() => navigation.navigate('Settings', { user:props.route.params.params.user })}
                         />
                     </Drawer.Section>
                 </View>

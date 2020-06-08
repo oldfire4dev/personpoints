@@ -34,6 +34,18 @@ export default class UserService {
         }
     }
 
+    updateProfilePic = async (uid, newProfilePic) => {
+        let doc = firestore.collection('users').doc(uid);
+        let responseImg, img;
+        responseImg = await fetch(newProfilePic);
+        img = await responseImg.blob();
+        firebase.storage().ref(`profile_pics/${uid}`).put(img);
+        let url = await firebase.storage().ref(`profile_pics/${uid}`).getDownloadURL();
+        doc.update({
+            profilePic: url,
+        })
+    }
+
     logoutUser = () => {
         return firebase.auth().signOut()
     }
@@ -44,6 +56,19 @@ export default class UserService {
             if(error.code == "auth/"+errorList.code) ptError = errorList.portuguese;
         });
         return ptError;
+    }
+
+    updateNewChanges = (uid, newValue, type) => {
+        if(type == 'email'){
+            let doc = firestore.collection('users').doc(uid);
+            firebase.auth().currentUser.updateEmail(newValue)
+            doc.update({ email: newValue });
+        }
+        else if(type == 'name'){
+            let doc = firestore.collection('users').doc(uid);
+            firebase.auth().currentUser.updateProfile({ displayName: newValue })
+            doc.update({ name: newValue });
+        }
     }
 
     timestamp = () => {
