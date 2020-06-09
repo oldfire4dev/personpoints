@@ -30,7 +30,7 @@ export default class userVerified extends Component {
 
     isVerifiedUser = async () => {
         try{
-            let data = await user_controller.fetchUser();
+            let data = await user_controller.fetchUser(this.props.route.params);
             return data
         }catch (error) {
             return Promise.reject(error)

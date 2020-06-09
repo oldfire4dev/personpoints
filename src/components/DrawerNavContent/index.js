@@ -36,10 +36,10 @@ export default function DrawerNavContent({props, navigation}) {
     }
 
     function setUserParams() {
-        const { name, email } = props.route.params.params.user;
+        const { name, email, profilePic } = props.route.params.params.user;
         setName(name);
+        setProfilePic(profilePic)
         setEmail(email);
-        // setProfilePic()
     }
 
     return (
@@ -48,7 +48,7 @@ export default function DrawerNavContent({props, navigation}) {
                 <View style={DrawerNavContentStyles.drawerContent}>
                     <View style={DrawerNavContentStyles.userOptionsContainer}>
                         <View style={{ flexDirection: 'row', }}>
-                            <Avatar.Image source={DefaultProfileImg} />
+                            <Avatar.Image source={profilePic? {uri: profilePic } : DefaultProfileImg} />
                             <View style={{ marginLeft: 10, marginTop: 10, flexDirection: 'column' }}>
                                 <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#454545', }} >{name}</Text>
                                 <Caption style={{ fontSize: 11, color: '#454545', }} >{email}</Caption>

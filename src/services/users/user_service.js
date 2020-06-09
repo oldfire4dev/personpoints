@@ -1,5 +1,6 @@
 import firebase from '../../configs/firebase';
 import firebaseErrors from '../../configs/firebase/auth_errors.json';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const firestore = firebase.firestore();
 
@@ -47,6 +48,7 @@ export default class UserService {
     }
 
     logoutUser = () => {
+        AsyncStorage.removeItem('auth_user');
         return firebase.auth().signOut()
     }
 

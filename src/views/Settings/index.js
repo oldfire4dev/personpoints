@@ -6,7 +6,8 @@ import {
     Text,
     TouchableOpacity,
     ScrollView,
-    Image
+    Image,
+    Alert
 } from 'react-native';
 import {
     Overlay,
@@ -65,6 +66,40 @@ export default class Settings extends Component {
         const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
         if(status) this.pickImage();
         else return
+    }
+
+    deleteAlert = () => {
+        Alert.alert("Excluir Usuário", "Quer mesmo excluir este usuário?", [
+            {
+              text: "Não, me enganei",
+              onPress: () => null,
+              style: "cancel"
+            },
+            { text: "Sim, eu quero", onPress: () => this.deleteUser() }
+        ]);
+    }
+
+    deleteUser = () => {
+        user_controller.delete(this.state.user.data.id)
+            .then(() => {
+                Toast.show('Usuário deletado', {
+                    duration: Toast.durations.LONG,
+                    position: Toast.positions.BOTTOM,
+                    shadow: true,
+                    animation: true,
+                    hideOnPress: true,
+                });
+                this.props.navigation.navigate('Main')
+            })
+            .catch(error => {
+                Toast.show(error.message, {
+                    duration: Toast.durations.LONG,
+                    position: Toast.positions.BOTTOM,
+                    shadow: true,
+                    animation: true,
+                    hideOnPress: true,
+                });
+            })
     }
 
     pickImage = async () => {
@@ -150,6 +185,15 @@ export default class Settings extends Component {
                                         </View>
                                     </View>
                                 </ScrollView>
+                                <View>
+                                    <TouchableOpacity 
+                                            style={{ flexDirection: 'row', backgroundColor:'#b31d12', borderRadius: 4, padding: 5, width: 202, justifyContent: 'center', alignSelf: 'center'}} 
+                                            onPress={() => this.deleteAlert()}
+                                    >
+                                        <Icon name="trash" color="#fff" size={16} style={{ marginRight: 6, }} />
+                                        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 14, }} >Remover usuário</Text>
+                                    </TouchableOpacity>
+                                </View>
                                 <Overlay
                                     isVisible={this.state.showEditAccountModal}
                                     onBackdropPress={() => this.toggleEditAccountModal(false)}

@@ -124,7 +124,7 @@ export default function EditUserAccount({
                     selectionColor='#5388d0'
                     returnKeyType = 'next'
                     keyboardType={modalContent?.input_type}
-                    errorMessage={modalType=='email_edit' ? formatEmail(newValue) ? '' : 'Digite um email válido.' : verifyNewValue(newValue) ? '' : 'Campo obrigatório'}
+                    errorMessage={modalType=='email' ? formatEmail(newValue) ? '' : 'Digite um email válido.' : verifyNewValue(newValue) ? '' : 'Campo obrigatório'}
                     onChangeText={(inputValue) => { setNewValue( inputValue );}}
                 />
             </View>

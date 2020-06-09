@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, ActivityIndicator, StatusBar } from 'react-native';
 import styles from '../../styles';
+import AsyncStorage from '@react-native-community/async-storage';
 
 // ----- SERVICES
 import UserService from '../../services/users/user_service';
@@ -10,23 +11,25 @@ const user_service = new UserService();
 
 export default function VerifyAuthenticate({ navigation }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState(null);
 
     useEffect(() => {
         verifyAuth();
     })
 
     async function verifyAuth() {
-        if(user_service.isAuthUser()) {
+        let auth_user = await AsyncStorage.getItem('auth_user');
+        let user = JSON.parse(auth_user);
+        if(user) {
             setIsAuthenticated(true);
         }else{
             setIsAuthenticated(false);
         }
-        redirectUser(isAuthenticated);
+        redirectUser(isAuthenticated, user);
     }
 
-    function redirectUser(auth) {
-        navigation.navigate( auth ? 'UserVerified' : 'Main' );
+    function redirectUser(auth, user) {
+        if(auth) navigation.navigate('UserVerified', user)
+        else navigation.navigate('Main' );
     }
 
     return (

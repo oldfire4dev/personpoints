@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "personpoints",
+    "name": "PersonPoints",
     "slug": "personpoints",
     "platforms": [
       "android"
@@ -8,6 +8,12 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "android": {
+      "package": "com.fire4dev.personpoints",
+      "adaptiveIcon": {
+        "backgroundImage": "./assets/icon.png"
+      }
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

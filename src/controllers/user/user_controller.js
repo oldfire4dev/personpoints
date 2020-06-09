@@ -1,6 +1,7 @@
 import firebase from '../../configs/firebase';
 import 'firebase/firestore';
 
+import AsyncStorage from '@react-native-community/async-storage';
 import UserService from '../../services/users/user_service';
 
 const user_service = new UserService();
@@ -11,6 +12,7 @@ export default class UserController {
         try {
             firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             let auth_user = await firebase.auth().createUserWithEmailAndPassword(user.email, user.password);
+            AsyncStorage.setItem('auth_user', JSON.stringify(auth_user.user));
             if(auth_user) {
                 let uid = auth_user.user.uid;
                 auth_user.user.sendEmailVerification();
@@ -27,14 +29,14 @@ export default class UserController {
         try {
             firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             let auth_user = await firebase.auth().signInWithEmailAndPassword(user.email, user.password);
+            AsyncStorage.setItem('auth_user', JSON.stringify(auth_user.user));
             return auth_user
         } catch (error) {
             return Promise.reject(user_service.errorsTranslate(error));
         }       
     }
 
-    fetchUser = async () => {
-        let user = await firebase.auth().currentUser
+    fetchUser = async (user) => {
         let userOnDB;
         if(user)
             userOnDB = await firestore.collection('users').doc(user.uid).get();
@@ -64,6 +66,15 @@ export default class UserController {
             user_service.updateProfilePic(uid, newProfilePic)
         } catch (error) {
             return Promise.reject(error.message)
+        }
+    }
+
+    delete = async (uid) => {
+        try {
+            await firestore.collection('users').doc(uid).delete();
+            await firebase.auth().currentUser.delete();
+        } catch (error) {
+            return Promise.reject(error)
         }
     }
 
