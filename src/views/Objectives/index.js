@@ -74,7 +74,9 @@ export default class Objectives extends Component {
                             persons: {
                                 data,
                                 isEmpty: false
-                        } })
+                            },
+                            isLoading: false
+                        })
                         this.setActiveUser();
                         if(this.state.persons) this.fetchObjectives();
                     }

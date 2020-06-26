@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -7,6 +7,8 @@ let responsiveHeight;
 if(height >= 750) responsiveHeight = height * 0.49;
 else if(height < 750 && height >= 620) responsiveHeight = height * 0.43;
 else if(height < 620 && height >= 495) responsiveHeight = height * 0.33;
+
+if(PixelRatio.get() < 2.35) responsiveHeight = PixelRatio.getPixelSizeForLayoutSize(105);
 
 const DashboardStyles = StyleSheet.create({
     app: {
@@ -106,7 +108,7 @@ const DashboardStyles = StyleSheet.create({
 
     noTasksFoundArea: {
         alignItems: 'center',
-        marginTop: width / 4,
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(12),
     },
 
 

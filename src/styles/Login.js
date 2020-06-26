@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         color: '#191d24',
         fontWeight: 'bold',
         textAlign: 'center',
-        marginTop: 40,
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(10),
     },
     
     formArea: {
@@ -20,13 +20,13 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         padding: '8%',
         width: 350,
-        marginTop: 50
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(10)
     },
 
     inputEmail: { marginTop: 20 },
 
     loginBtn: {
-        marginTop: 30,
+        marginTop: PixelRatio.getPixelSizeForLayoutSize(4),
         backgroundColor: '#5388d0'
     },
 

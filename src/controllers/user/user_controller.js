@@ -38,11 +38,12 @@ export default class UserController {
 
     fetchUser = async (user) => {
         let userOnDB;
-        if(user)
+        if(user){
             userOnDB = await firestore.collection('users').doc(user.uid).get();
             return {
                 user, userOnDB: userOnDB.data()
             }
+        }
     }
 
     fetchUid = async () => {

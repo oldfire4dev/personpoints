@@ -99,7 +99,7 @@ export default class Tasks extends Component{
                 .then(data => {
                     data.onSnapshot(snapshot => {
                         let data = [];
-                        if(snapshot.empty) this.setState({ tasks: {isEmpty: true} })
+                        if(snapshot.empty) this.setState({ tasks: {isEmpty: true}, isLoading: false })
                         else {
                             snapshot.forEach(res => {
                                 data.push(res.data());
