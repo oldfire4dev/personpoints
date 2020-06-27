@@ -27,12 +27,7 @@ export default class UserService {
     }
 
     isVerifiedEmail = async () => {
-        try{
-            return await firebase.auth().currentUser.emailVerified
-        }
-        catch(err) {
-            return Promise.reject(err);
-        }
+        return await firebase.auth().currentUser.emailVerified
     }
 
     updateProfilePic = async (uid, newProfilePic) => {

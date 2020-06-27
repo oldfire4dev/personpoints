@@ -75,7 +75,6 @@ export default class Objectives extends Component {
                                 data,
                                 isEmpty: false
                             },
-                            isLoading: false
                         })
                         this.setActiveUser();
                         if(this.state.persons) this.fetchObjectives();
@@ -91,7 +90,7 @@ export default class Objectives extends Component {
                 .then(data => {
                     data.onSnapshot(snapshot => {
                         let data = [];
-                        if(snapshot.empty) this.setState({ objectives: {isEmpty: true} })
+                        if(snapshot.empty) this.setState({ objectives: {isEmpty: true}, isLoading: false })
                         else {
                             snapshot.forEach(res => {
                                 data.push(res.data());
@@ -169,6 +168,12 @@ export default class Objectives extends Component {
             },
             { text: "Sim, eu quero", onPress: () => this.recusedObjective(oid) }
           ]);
+    }
+    
+    selectPerson = (person) => {
+        if(person){
+            this.setState({ selectedPerson: person });
+        }
     }
 
     recusedObjective = (oid) => {

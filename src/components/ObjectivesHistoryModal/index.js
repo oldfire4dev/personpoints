@@ -129,8 +129,19 @@ export default function ObjectivesHistoryModal({ toggleObjectiveHistoryModal, ob
                                 </View>
                                 <View>
                                     <Text style={ styles.dateTitleText } >{objective.cancelled ? 'Cancelado em:' : 'Concluído em:'}</Text>
-                                    <Text style={{ textAlign: 'right', fontSize: 13, color: '#e9e9e9', fontStyle: 'italic', }}>{dateFormat(objective.updatedAt)}</Text>
-                                    <Text style={{ textAlign: 'right', fontSize: 13, color: '#e9e9e9', fontStyle: 'italic', }}>{hourFormat(objective.updatedAt)}</Text>
+                                    {
+                                        hourFormat(objective.updatedAt) != hourFormat(objective.createdAt) ? 
+                                        (
+                                            <>
+                                                <Text style={{ textAlign: 'right', fontSize: 13, color: '#e9e9e9', fontStyle: 'italic', }}>{dateFormat(objective.updatedAt)}</Text>
+                                                <Text style={{ textAlign: 'right', fontSize: 13, color: '#e9e9e9', fontStyle: 'italic', }}>{hourFormat(objective.updatedAt)}</Text>
+                                            </>
+                                        ) :
+                                        (
+                                            <Text style={{ textAlign: 'right', fontSize: 13, color: '#e9e9e9', fontStyle: 'italic', }}>--/--/--</Text>
+                                        )
+                                    }
+                                    
                                 </View>
                             </View>
                             <View style={styles.objectiveValuePoints} >

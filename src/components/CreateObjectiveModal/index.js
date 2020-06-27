@@ -10,6 +10,11 @@ import {
     CheckBox,
 } from 'react-native-elements';
 import {
+    AdMobInterstitial,
+    setTestDeviceIDAsync
+} from 'expo-ads-admob';
+
+import {
     Divider
 } from 'react-native-paper';
 import Toast from 'react-native-root-toast';
@@ -66,9 +71,19 @@ export default function CreateObjectiveModal({ toggleCreateObjectiveModal, pid }
             else setCanCreateObjective(true);
         }
     }
+    
+    async function addAdMobInterstitial() {
+        await AdMobInterstitial.setAdUnitID('ca-app-pub-8220718551244921/6288752852');
+        AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true})
+            .then(async () => {
+                await AdMobInterstitial.showAdAsync();
+            })
+            .catch(err => console.log(err))
+    }
 
     function saveObjective() {
         let objective;
+        addAdMobInterstitial();
         if(randomPoints){
             let randomPts = Math.floor((Math.random() * 950) + 200);
             while(randomPts > 950){

@@ -10,9 +10,9 @@ const firestore = firebase.firestore();
 export default class UserController {
     create = async (user) => {
         try {
+            AsyncStorage.setItem('auth_user', JSON.stringify({ email: user.email, password: user.password, }));
             firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             let auth_user = await firebase.auth().createUserWithEmailAndPassword(user.email, user.password);
-            AsyncStorage.setItem('auth_user', JSON.stringify(auth_user.user));
             if(auth_user) {
                 let uid = auth_user.user.uid;
                 auth_user.user.sendEmailVerification();
@@ -27,22 +27,25 @@ export default class UserController {
 
     login = async (user) => {
         try {
+            AsyncStorage.setItem('auth_user', JSON.stringify({ email: user.email, password: user.password, }));
             firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             let auth_user = await firebase.auth().signInWithEmailAndPassword(user.email, user.password);
-            AsyncStorage.setItem('auth_user', JSON.stringify(auth_user.user));
             return auth_user
         } catch (error) {
             return Promise.reject(user_service.errorsTranslate(error));
         }       
     }
 
-    fetchUser = async (user) => {
-        let userOnDB;
-        if(user){
+    fetchUser = async () => {
+        try {
+            let userOnDB;
+            let user = await firebase.auth().currentUser;
             userOnDB = await firestore.collection('users').doc(user.uid).get();
             return {
                 user, userOnDB: userOnDB.data()
             }
+        } catch (error) {
+            return Promise.reject(error);
         }
     }
 

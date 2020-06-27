@@ -12,6 +12,9 @@
       "package": "com.fire4dev.personpoints",
       "adaptiveIcon": {
         "backgroundImage": "./assets/icon.png"
+      },
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-8220718551244921~4975315969"
       }
     },
     "splash": {
