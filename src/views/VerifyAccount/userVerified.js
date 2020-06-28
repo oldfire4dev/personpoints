@@ -61,11 +61,12 @@ export default class userVerified extends Component {
 
     componentDidMount = async () => {
         this._isMounted = true;
+        let data = await user_controller.fetchUser();
         if(this._isMounted){
-            let data = await user_controller.fetchUser();
             setTimeout(() => {
+                console.log(data)
                 this.isVerifiedUser(data);
-            }, 700)
+            }, 2300)
         }
     }
 
