@@ -27,8 +27,6 @@ export default function VerifyAuthenticate({ navigation }) {
     async function verifyAuth() {
         let auth_user = await AsyncStorage.getItem('auth_user');
         let user = JSON.parse(auth_user);
-        // user_service.logoutUser()
-        // console.log(isVerifiedEmail)
         if(user || user_service.isAuthUser()) {
             !user_service.isAuthUser() && user_controller.login(user)
             .then(() => {

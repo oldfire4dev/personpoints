@@ -75,6 +75,7 @@ export default class UserController {
 
     delete = async (uid) => {
         try {
+            AsyncStorage.removeItem('auth_user');
             await firestore.collection('users').doc(uid).delete();
             await firebase.auth().currentUser.delete();
         } catch (error) {

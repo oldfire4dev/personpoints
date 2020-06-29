@@ -183,6 +183,12 @@ export default class Settings extends Component {
                                                 <Text>{this.state.user.data.name}</Text>
                                             </TouchableOpacity>
                                         </View>
+                                        <View style={{ marginBottom: 10, }} >
+                                            <Text style={SettingsStyles.settingText}>Meu ID</Text>
+                                            <View style={SettingsStyles.settingInfo} onPress={() => this.toggleEditAccountModal(true, 'name')}>
+                                                <Text>{this.state.user.data.id}</Text>
+                                            </View>
+                                        </View>
                                     </View>
                                 </ScrollView>
                                 <View>

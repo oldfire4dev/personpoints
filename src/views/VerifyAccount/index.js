@@ -49,7 +49,7 @@ export default class VerifyAccount extends Component {
     }
 
     setNameAndEmail = () => {
-        const {email, name, isVerified} = this.props.route.params.userOnDB;
+        const {email, name, isVerified} = this.props.route.params;
         let firstName = name.split(' ')[0]
         this.setState({ name: firstName, email, isVerified });
     }

@@ -82,8 +82,13 @@ export default function signUp({ closeModalWhenSubmit }) {
                 profilePicURL
             };
             user_controller.create(user)
-                .then(() => {
-                    navigation.navigate('UserVerified');
+                .then((res) => {
+                    let data  = {
+                        name: user.name,
+                        email: user.email,
+                        isVerified: false,
+                    };
+                    navigation.navigate('VerifyAccount', data);
                     closeModalWhenSubmit();                    
                 })
                 .catch(error => {
