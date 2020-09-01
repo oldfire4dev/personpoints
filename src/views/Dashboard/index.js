@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     Image,
     FlatList,
-    ScrollView
+    ScrollView,
+    StatusBar
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {
@@ -185,6 +186,7 @@ export default class Dashboard extends Component {
     render() {
         return (
             <View style={DashboardStyles.app}>
+                <StatusBar barStyle='light-content' backgroundColor='#203f78' translucent={false} />
                 <View style={DashboardStyles.headerArea}>
                     <View style={DashboardStyles.personArea}>
                         <TouchableOpacity onPress={() => this.openDrawerMenu()}>

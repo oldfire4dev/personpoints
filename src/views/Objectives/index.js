@@ -4,7 +4,8 @@ import {
     TouchableOpacity,
     Text,
     ScrollView,
-    Alert
+    Alert,
+    StatusBar
 } from 'react-native';
 import ObjectivesStyles from '../../styles/Objectives';
 import Icon from 'react-native-vector-icons/FontAwesome5'
