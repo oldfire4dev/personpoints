@@ -67,7 +67,7 @@ export default class Main extends Component {
     render() { 
         return (
             <View style={MainStyles.containerStart}>
-                <StatusBar barStyle='light-content' backgroundColor='#203f78' />
+                <StatusBar barStyle='light-content' backgroundColor='#203f78' translucent={false} />
                 <Image style={MainStyles.background} source={background} />
                 <View>
                     <View>
