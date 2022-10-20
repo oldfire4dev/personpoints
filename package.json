@@ -27,7 +27,7 @@
     "react-native-material-textfield": "^0.16.1",
     "react-native-paper": "^3.10.1",
     "react-native-push-notification": "^3.5.2",
-    "react-native-reanimated": "~1.7.0",
+    "react-native-reanimated": "~2.10.0",
     "react-native-root-toast": "^3.2.1",
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
